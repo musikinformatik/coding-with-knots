@@ -41,7 +41,7 @@ SynthDef(\sin, { |out, freq = 440, sustain = 1, pan, amp = 0.1, ply|
 )
 (
 SynthDef(\gabor, { |out, freq = 440, sustain = 1, pan, amp = 0.1|
-	var env = LFGauss.ar(sustain, 0.3, loop:0, doneAction:2);
+	var env = LFGauss.ar(sustain, 0.3, loop:0, doneAction:2).range;
 	var son = SinOsc.ar(freq);
 	Out.ar(out, Pan2.ar(son, pan, env * (amp * 2 * AmpCompA.kr(freq))));
 }).add;
