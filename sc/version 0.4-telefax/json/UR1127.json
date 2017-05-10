@@ -1,0 +1,57 @@
+{ 
+"id": "primary", "ply": "?", "attach": "?", 
+"colours": [[255, 255, 255]],
+"knots": [],"children": [
+ { 
+  "id": "1", "ply": "U", "attach": "U", 
+  "colours": [[119, 119, 119]],
+  "knots": [
+  { "value": 1, "type": "S", "position": 4.5, "spin": "Z" },
+  { "value": 7, "type": "S", "position": 10.5, "spin": "Z" },
+  { "value": 5, "type": "L", "position": 17.5, "spin": "Z" }
+  ],
+  "children": []
+ },
+ { 
+  "id": "2", "ply": "U", "attach": "U", 
+  "colours": [[77, 34, 14]],
+  "knots": [
+  { "value": 3, "type": "S", "position": 9.5, "spin": "Z" },
+  { "value": 3, "type": "L", "position": 18.5, "spin": "Z" }
+  ],
+  "children": []
+ },
+ { 
+  "id": "3", "ply": "U", "attach": "U", 
+  "colours": [[77, 34, 14]],
+  "knots": [
+  { "value": 1, "type": "S", "position": 10.0, "spin": "Z" },
+  { "value": 2, "type": "L", "position": 18.5, "spin": "Z" }
+  ],
+  "children": []
+ },
+ { 
+  "id": "4", "ply": "U", "attach": "U", 
+  "colours": [[77, 34, 14]],
+  "knots": [
+  { "value": 4, "type": "S", "position": 9.5, "spin": "Z" },
+  { "value": 5, "type": "L", "position": 18.0, "spin": "Z" }
+  ],
+  "children": []
+ },
+ { 
+  "id": "5", "ply": "U", "attach": "U", 
+  "colours": [[77, 34, 14]],
+  "knots": [
+  { "value": 8, "type": "S", "position": 10.0, "spin": "Z" },
+  { "value": 5, "type": "L", "position": 18.5, "spin": "Z" }
+  ],
+  "children": []
+ },
+ { 
+  "id": "6", "ply": "U", "attach": "U", 
+  "colours": [[77, 34, 14]],
+  "knots": [],  "children": []
+ }
+]
+}
