@@ -28,6 +28,28 @@ SynthDef(\gabor, { |out, freq = 440, sustain = 1, pan, amp = 0.1, width = 0.3|
 ~data = ~get.(\UR006);
 )
 
+
+/*
+~data = ~get.(\UR004);
+~data = ~get.(\HP019);
+~data = ~get.(\UR019);
+
+// boring quipu
+~data = ~get.(\UR046);
+
+// astronomical quipu
+~data = ~get.(\UR006);
+~data = ~get.(\UR009);
+
+// variants of administrative quipus
+~data = ~get.(\UR066);
+~data = ~get.(\UR067);
+~data = ~get.(\UR068);
+
+~data = ~get.(\UR051);
+~data = ~get.(\UR015);
+*/
+
 ~traverse.(~data, { |x| x[\colours].postln }); "";
 ~traverse.(~data, { |x, l| x[\knots].size.post; " ".post; }); "";
 
@@ -116,7 +138,7 @@ Tdef(\x, {
 	~traverse.(~data, { |x|
 		var note = x[\colours].collect { |c| ~colDict.at(c) };
 		if(note.notEmpty) {
-			(degree:note, sustain: 0.13, instrument: \sins).play;
+			(degree:note,  scale: Scale.at(\hexMajor7), sustain: 0.13, instrument: \sins).play;
 		};
 		0.05.wait;
 	})
@@ -131,7 +153,7 @@ Tdef(\x, {
 		var note = x[\colours].collect { |c| ~colDict.at(c) };
 		var harmonics = if(x[\knots].notEmpty) { x[\knots].collect(_[\value]) ? 1 } { 1 }.postln;
 		if(note.notEmpty) {
-			(degree:note, harmonic:harmonics, sustain: 0.13, instrument: \sin).play;
+			(degree:note, harmonic:harmonics, sustain: 0.13, instrument: \sin, scale: Scale.at(\hexMajor7)).play;
 		};
 		0.05.wait;
 	})
@@ -145,13 +167,27 @@ Tdef(\x, {
 Tdef(\x, {
 	var plyi = ('S': -1, 'Z': 1, 'U': 0);
 	~colDict = ~mapValues.(~data, \colours, { |a, b| ~coloursHSV.(a).first >~coloursHSV.(b).first } );
-	~traverse.(~data, { |x|
+	~satDict = ~colDict.collect { |note, col| ~coloursHSV.(col).at(1) };
+	~traverse.(~data, { |x, level|
 		var note = x[\colours].collect { |c| ~colDict.at(c) };
-		var harmonics = if(x[\knots].notEmpty) { x[\knots].collect(_[\value]) ? 1 } { 1 }.postln;
+		var sat =  x[\colours].collect { |c| ~satDict.at(c) }.postln;
+		var harmonics = if(x[\knots].notEmpty) { x[\knots].collect(_[\value]) ? 1.0 };
+		harmonics = if(harmonics.isNil) { 1 } { if(harmonics.includes(1.0)) { harmonics } { harmonics ++ 1 }};
+		"note: %, harmonics: %\n".postf(note, harmonics);
 		if(note.notEmpty) {
-			(degree:note, harmonic:harmonics, sustain: 0.2, instrument: \sin, pan: plyi[x[\ply]]).play;
+			(
+				degree:note,
+				harmonic:harmonics,
+				//ctranspose: level,
+				sustain: 0.3,
+				scale: Scale.at(\hexMajor7),
+				amp: sat * 0.5,
+				instrument: \sin,
+				pan: plyi[x[\ply]]
+			).play;
 		};
 		0.12.wait;
+		//(0.5 / (2 ** level)).wait;
 	})
 }).play
 )

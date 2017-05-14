@@ -22,3 +22,28 @@ Tdef(\x, {
 }).play
 )
 
+
+
+// dubious audification example
+
+~positions = k.collect { |x| x[\position] };
+~buf = Buffer.sendCollection(s, ~positions);
+~buf.numFrames; // 25740 = 0.5 sec
+
+~positions.as(IdentitySet).as(Array).sort.keep(-8)
+
+(
+Ndef(\x, {
+	var pos;
+	pos = PlayBuf.ar(1, ~buf, 1);
+	Limiter.ar(pos, 0.1);
+}).play;
+)
+
+(
+Ndef(\x, {
+	var pos;
+	pos = PlayBuf.ar(1, ~buf, rate: MouseX.kr(0.001, 1, 1), loop:1).poll;
+	SinOsc.ar(pos.linexp(0, 67, 400, 9000)) * 0.1
+}).play;
+)
